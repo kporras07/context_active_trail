@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for context_active_trail.
+ */
+
+use Drupal\context\ContextInterface;
+use Drupal\Core\Cache\Cache;
+
+/**
+ * Implements hook_context_update().
+ */
+function context_active_trail_context_update(ContextInterface $entity) {
+  // This seems to be the only way to deal with an active trail reaction
+  // being removed.
+  if ($entity->original->hasReaction('active_trail')) {
+    Cache::invalidateTags(['context_active_trail']);
+  }
+}
+
+/**
+ * Implements hook_context_delete().
+ */
+function context_active_trail_context_delete(ContextInterface $entity) {
+  if ($entity->hasReaction('active_trail')) {
+    Cache::invalidateTags(['context_active_trail']);
+  }
+}
