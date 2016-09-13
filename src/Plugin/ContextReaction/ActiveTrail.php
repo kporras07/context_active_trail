@@ -112,7 +112,7 @@ class ActiveTrail extends ContextReactionPluginBase implements ContainerFactoryP
       return NULL;
     }
 
-    list($menu, $link_id) = explode(':', $this->configuration['trail'], 2);
+    list(, $link_id) = explode(':', $this->configuration['trail'], 2);
     return $link_id;
   }
 

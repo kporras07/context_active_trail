@@ -13,7 +13,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Build breadcrumbs based on active trail from context
+ * Build breadcrumbs based on active trail from context.
  */
 class ContextBreadcrumbBuilder implements BreadcrumbBuilderInterface {
 
