@@ -31,7 +31,7 @@ Installation
 ------------
 
  * Install [as you would normally install a contributed Drupal module]
-   (https://www.drupal.org/docs/8/extending-drupal/installing-contributed-modules).
+(https://www.drupal.org/docs/8/extending-drupal/installing-contributed-modules).
 
  * This module is not compatible with other modules that attempt to take
    control of active trails, such as:
