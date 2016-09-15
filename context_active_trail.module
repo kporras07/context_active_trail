@@ -6,16 +6,24 @@
  */
 
 use Drupal\context\ContextInterface;
+use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Cache tag for things that are dependent on the breadcrumbs configuration.
+ *
+ * Whenever something might change which breadcrumb builder is responsible for
+ * a given breadcrumb, this tag needs to be invalidated.
+ */
+const CACHE_TAG_BREADCRUMBS = "cache_tag_breadcrumbs";
 
 /**
  * Implements hook_context_update().
  */
 function context_active_trail_context_update(ContextInterface $entity) {
-  // This seems to be the only way to deal with an active trail reaction
-  // being removed.
   if ($entity->original->hasReaction('active_trail')) {
-    Cache::invalidateTags(['context_active_trail']);
+    Cache::invalidateTags([CACHE_TAG_BREADCRUMBS]);
   }
 }
 
@@ -24,6 +32,13 @@ function context_active_trail_context_update(ContextInterface $entity) {
  */
 function context_active_trail_context_delete(ContextInterface $entity) {
   if ($entity->hasReaction('active_trail')) {
-    Cache::invalidateTags(['context_active_trail']);
+    Cache::invalidateTags([CACHE_TAG_BREADCRUMBS]);
   }
+}
+
+/**
+ * Implements hook_system_breadcrumb_alter().
+ */
+function context_active_trail_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatchInterface $route_match, array $context) {
+  $breadcrumb->addCacheTags([CACHE_TAG_BREADCRUMBS]);
 }
