@@ -6,7 +6,7 @@ the context it is in. For example, you can make every node of type _article_
 appear to live under the _Blog_ menu item.
 
 * For a full description of the module, visit the
-  [project page](https://www.drupal.org/sandbox/evolvingweb-vasi/2798989)
+  [project page](https://www.drupal.org/project/context_active_trail)
 
 * [To submit bug reports and feature suggestions, or to track changes]
   (https://www.drupal.org/project/issues/2798989)
