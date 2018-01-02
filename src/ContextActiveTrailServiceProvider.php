@@ -2,8 +2,8 @@
 
 namespace Drupal\context_active_trail;
 
-use \Drupal\Core\DependencyInjection\ServiceProviderBase;
-use \Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\DependencyInjection\ServiceProviderBase;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**

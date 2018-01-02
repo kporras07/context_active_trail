@@ -89,7 +89,7 @@ class ActiveTrail extends ContextReactionPluginBase implements ContainerFactoryP
       '#states' => [
         'visible' => [
           ':input[name="reactions[active_trail][breadcrumbs]"]' => ['checked' => TRUE],
-        ]
+        ],
       ],
     ];
     return $form;
@@ -137,4 +137,3 @@ class ActiveTrail extends ContextReactionPluginBase implements ContainerFactoryP
   }
 
 }
-
