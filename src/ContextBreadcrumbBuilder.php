@@ -53,6 +53,13 @@ class ContextBreadcrumbBuilder implements BreadcrumbBuilderInterface {
   protected $request;
 
   /**
+   * Configuration of the context reaction affecting breadcrumbs.
+   *
+   * @var array
+   */
+  protected $configuration;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\context\ContextManager $context_manager
@@ -80,7 +87,7 @@ class ContextBreadcrumbBuilder implements BreadcrumbBuilderInterface {
   public function applies(RouteMatchInterface $route_match) {
     foreach ($this->contextManager->getActiveReactions('active_trail') as $reaction) {
       if ($reaction->setsBreadcrumbs()) {
-        return $reaction;
+        return $this->configuration = $reaction->getConfiguration();
       }
     }
     return FALSE;
@@ -95,6 +102,8 @@ class ContextBreadcrumbBuilder implements BreadcrumbBuilderInterface {
 
     // Start with home page.
     $breadcrumb->addLink(Link::createFromRoute(t('Home'), '<front>'));
+
+    // Add links from menu.
     $link_ids = array_filter($this->activeTrail->getActiveTrailIds(NULL));
     foreach (array_reverse($link_ids) as $link_id) {
       $link = $this->linkManager->getInstance(['id' => $link_id]);
@@ -103,11 +112,15 @@ class ContextBreadcrumbBuilder implements BreadcrumbBuilderInterface {
       );
     }
 
-    $title = $this->titleResolver->getTitle($this->request,
-      $route_match->getRouteObject());
-    $breadcrumb->addLink(Link::createFromRoute($title, '<none>'));
+    // Include current page title.
+    if ($this->configuration['breadcrumb_title']) {
+      $title = $this->titleResolver->getTitle($this->request,
+        $route_match->getRouteObject());
+      $breadcrumb->addLink(Link::createFromRoute($title, '<none>'));
+    }
 
     return $breadcrumb;
   }
 
 }
+

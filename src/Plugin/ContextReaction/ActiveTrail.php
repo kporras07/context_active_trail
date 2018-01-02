@@ -77,8 +77,20 @@ class ActiveTrail extends ContextReactionPluginBase implements ContainerFactoryP
     $form['trail'] = $this->menuLinkSelector->parentSelectElement($trail);
     $form['breadcrumbs'] = [
       '#type' => 'checkbox',
-      '#title' => 'Also set breadcrumbs',
+      '#title' => $this->t('Override breadcrumbs'),
+      '#description' => $this->t('Override breadcrumbs based on the modified active trail.'),
       '#default_value' => $this->configuration['breadcrumbs'],
+    ];
+    $form['breadcrumb_title'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show current page title at end'),
+      '#description' => $this->t('If your site has a module dedicated to handling breadcrumbs already, ensure this setting is disabled.'),
+      '#default_value' => $this->configuration['breadcrumb_title'],
+      '#states' => [
+        'visible' => [
+          ':input[name="reactions[active_trail][breadcrumbs]"]' => ['checked' => TRUE],
+        ]
+      ],
     ];
     return $form;
   }
@@ -90,6 +102,7 @@ class ActiveTrail extends ContextReactionPluginBase implements ContainerFactoryP
     return parent::getConfiguration() + [
       'trail' => 'main:',
       'breadcrumbs' => TRUE,
+      'breadcrumb_title' => FALSE,
     ];
   }
 
@@ -124,3 +137,4 @@ class ActiveTrail extends ContextReactionPluginBase implements ContainerFactoryP
   }
 
 }
+
