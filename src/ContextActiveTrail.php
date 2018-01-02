@@ -8,6 +8,7 @@ use Drupal\Core\Lock\LockBackendInterface;
 use Drupal\Core\Menu\MenuActiveTrail;
 use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 
 /**
  * Allow the active trail to be set manually.
@@ -47,7 +48,16 @@ class ContextActiveTrail extends MenuActiveTrail {
     // Try to get the value from context.
     foreach ($this->contextManager->getActiveReactions('active_trail') as $reaction) {
       if ($link_id = $reaction->getLinkId()) {
-        return $this->menuLinkManager->getInstance(['id' => $link_id]);
+        try {
+          $instance = $this->menuLinkManager->getInstance(['id' => $link_id]);
+        }
+        catch (PluginNotFoundException $e) {
+          \Drupal::logger('context_active_trail')->error('Could not find the configured menu link to set active: @error', [
+            '@error' => $e->getMessage(),
+          ]);
+          return FALSE;
+        }
+        return $instance;
       }
     }
 
