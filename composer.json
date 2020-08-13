@@ -1,0 +1,10 @@
+{
+    "name": "drupal/context_active_trail",
+    "type": "drupal-module",
+    "description": "Context Active Trail module for Drupal.",
+    "homepage": "http://drupal.org/project/context_active_trail",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "drupal/core": "^8.8 || ^9"
+    }
+}
